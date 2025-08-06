@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>REC Client Documents</title>
+  <title>REC Client Portal</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -47,6 +47,50 @@
       border: 1px solid #ddd;
       border-radius: 4px;
     }
+    #formContainer {
+      display: none;
+      line-height: 1.6;
+    }
+    #formContainer h2 {
+      color: #1a3c6c;
+      border-bottom: 2px solid #1a3c6c;
+      padding-bottom: 8px;
+    }
+    label {
+      display: block;
+      margin-top: 16px;
+      font-weight: 600;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+    button {
+      background: #1a3c6c;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background: #132f55;
+    }
     footer {
       text-align: center;
       padding: 20px;
@@ -55,7 +99,6 @@
       margin-top: 30px;
     }
   </style>
-  <title>REC Client Portal</title>
 </head>
 <body>
   <header>
@@ -67,19 +110,93 @@
     <a href="#roadmap" onclick="loadPDF('roadmap.pdf')">Engagement Roadmap</a>
     <a href="#checklist" onclick="loadPDF('checklist.pdf')">Engagement Checklist</a>
     <a href="#funding" onclick="loadPDF('funding-process.pdf')">Funding Process</a>
+    <a href="#form" onclick="loadForm()">Intake Form</a>
   </nav>
 
   <div class="container">
     <iframe id="pdfFrame" src="roadmap.pdf"></iframe>
+
+    <div id="formContainer">
+      <h2>REC Client Intake & Commitment Form</h2>
+      <p><em>This form initiates the formal engagement process as outlined in the Client Engagement Roadmap and Project Funding Process. All fields are required unless otherwise noted.</em></p>
+
+      <form id="intakeForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="2976235d-0073-4a05-9ad6-b5bff9cb2b4d">
+        <input type="hidden" name="subject" value="New REC Client Submission">
+
+        <label><strong>1. Project Name</strong></label>
+        <input type="text" name="project_name" required>
+
+        <label><strong>2. Seller Full Name (Authorized Representative)</strong></label>
+        <input type="text" name="seller_name" required>
+
+        <label><strong>3. Seller Contact Information</strong></label>
+        <input type="tel" name="phone" placeholder="(201) 555-0123" required>
+        <input type="email" name="email" placeholder="name@example.com" required>
+        <textarea name="business_address" placeholder="Company Business Address" required></textarea>
+
+        <label><strong>4. Company Represented</strong></label>
+        <input type="text" name="company" required>
+
+        <label><strong>5. Law Firm Selected for Escrow</strong></label>
+        <input type="text" name="law_firm" placeholder="Law Firm Name" required>
+        <input type="text" name="escrow_attorney" placeholder="Escrow Attorney Name (Optional)">
+        <input type="email" name="attorney_email" placeholder="Escrow Attorney Email (Optional)">
+
+        <label><strong>6. Project Development Need</strong></label>
+        <select name="development_need" required>
+          <option value="">-- Select Need --</option>
+          <option value="CAPEX Funding">CAPEX Funding</option>
+          <option value="Expansion">Expansion</option>
+          <option value="Recapitalization">Recapitalization</option>
+          <option value="Monetization">Monetization</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <label><strong>7. Requested Project Sale Price (Acquisition Value in USD)</strong></label>
+        <input type="number" name="sale_price" min="50000000" placeholder="e.g., 100,000,000" required>
+
+        <label><strong>8. Project Development Capital Needed (USD)</strong></label>
+        <small>Amount to be held in Admin Hold for post-closing CAPEX, disbursed in verified milestones</small>
+        <input type="number" name="development_capital" placeholder="e.g., 25,000,000" required>
+
+        <label><strong>9. Do you have the needed closing fees?</strong></label>
+        <small>
+          Includes:<br>
+          • 1% Commitment Fee on <strong>Acquisition Value</strong><br>
+          • $50,000 per $50M in <strong>total transaction value</strong> (Acquisition + Development Capital)
+        </small><br>
+        <input type="radio" name="fees_ready" value="Yes" required> Yes<br>
+        <input type="radio" name="fees_ready" value="No"> No
+
+        <label><strong>10. Client Acknowledgment</strong></label>
+        <p>By submitting this form, you acknowledge that you have read and understood the <a href="roadmap.pdf" target="_blank">Client Engagement Roadmap</a> and <a href="funding-process.pdf" target="_blank">Project Funding Process</a>, and confirm your readiness, willingness, and ability to proceed with the outlined process and fulfill all associated obligations.</p>
+        <input type="text" name="signature" placeholder="Typed Full Name as Signature" required>
+        <input type="date" name="date" required>
+
+        <button type="submit">Submit Form</button>
+      </form>
+    </div>
   </div>
 
   <footer>
-    Confidential documents provided for qualified clients only.
+    Confidential documents provided for qualified clients only. &copy; Ricaurte Energy Capital
   </footer>
 
   <script>
     function loadPDF(pdf) {
       document.getElementById('pdfFrame').src = pdf;
+      document.getElementById('pdfFrame').style.display = 'block';
+      document.getElementById('formContainer').style.display = 'none';
+    }
+
+    function loadForm() {
+      document.getElementById('pdfFrame').style.display = 'none';
+      document.getElementById('formContainer').style.display = 'block';
+    }
+
+    window.onload = function() {
+      loadPDF('roadmap.pdf');
     }
   </script>
 </body>
