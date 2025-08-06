@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>REC Client Documents</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f6f9;
+      color: #2c3e50;
+    }
+    header {
+      background: #1a3c6c;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background: #2c5ca8;
+      display: flex;
+      justify-content: center;
+    }
+    nav a {
+      color: white;
+      padding: 15px 25px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: #1a3c6c;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    iframe {
+      width: 100%;
+      height: 80vh;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #7f8c8d;
+      margin-top: 30px;
+    }
+  </style>
+  <title>REC Client Portal</title>
+</head>
+<body>
+  <header>
+    <h1>Ricaurte Energy Capital (REC)</h1>
+    <p>Client Engagement & Funding Process</p>
+  </header>
+
+  <nav>
+    <a href="#roadmap" onclick="loadPDF('roadmap.pdf')">Engagement Roadmap</a>
+    <a href="#checklist" onclick="loadPDF('checklist.pdf')">Engagement Checklist</a>
+    <a href="#funding" onclick="loadPDF('funding-process.pdf')">Funding Process</a>
+  </nav>
+
+  <div class="container">
+    <iframe id="pdfFrame" src="roadmap.pdf"></iframe>
+  </div>
+
+  <footer>
+    Confidential documents provided for qualified clients only.
+  </footer>
+
+  <script>
+    function loadPDF(pdf) {
+      document.getElementById('pdfFrame').src = pdf;
+    }
+  </script>
+</body>
+</html>
